@@ -16,7 +16,7 @@ const getApiUrl = () => {
     return `http://localhost:${port}`;
   }
 
-  return `https://${port}-${codespaceName}.githubpreview.dev`;
+  return `https://${codespaceName}-${port}.app.github.dev`;
 };
 
 app.use(express.json());
