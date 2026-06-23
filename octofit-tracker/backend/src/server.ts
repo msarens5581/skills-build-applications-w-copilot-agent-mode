@@ -9,12 +9,12 @@ const port = 8000;
 const codespaceName = process.env.CODESPACE_NAME;
 const host = '0.0.0.0';
 
-const getApiUrl = (): string => {
+export const getApiUrl = (): string => {
   if (!codespaceName) {
     return `http://localhost:${port}`;
   }
 
-  return `https://${codespaceName}-${port}.app.github.dev`;
+  return `https://${codespaceName}-8000.app.github.dev`;
 };
 
 export function createApp(): Express {
