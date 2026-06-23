@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import mongoose from 'mongoose';
+import { connectDatabase } from './config/database';
 import usersRouter from './routes/users';
 import teamsRouter from './routes/teams';
 import activitiesRouter from './routes/activities';
@@ -8,7 +8,6 @@ import workoutsRouter from './routes/workouts';
 
 const app = express();
 const port = 8000;
-const mongoUri = 'mongodb://127.0.0.1:27017/octofit_db';
 const codespaceName = process.env.CODESPACE_NAME;
 const host = '0.0.0.0';
 
@@ -39,15 +38,14 @@ app.use('/api/activities', activitiesRouter);
 app.use('/api/leaderboard', leaderboardRouter);
 app.use('/api/workouts', workoutsRouter);
 
-mongoose.connect(mongoUri)
+connectDatabase()
   .then(() => {
-    console.log('Connected to MongoDB at', mongoUri);
     console.log('API base URL:', getApiUrl());
     app.listen(port, host, () => {
       console.log(`Server listening on http://localhost:${port}`);
     });
   })
   .catch((error) => {
-    console.error('MongoDB connection error:', error);
+    console.error('Failed to start server:', error);
     process.exit(1);
   });
